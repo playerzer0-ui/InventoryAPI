@@ -45,10 +45,10 @@ namespace InventoryAPI.Data
                 .WithOne(i => i.Order)
                 .HasForeignKey<Invoices>(i => i.OrderId);
 
-            modelBuilder.Entity<Users>().HasData(
+            /*modelBuilder.Entity<Users>().HasData(
                 new Users { UsersId = Guid.NewGuid(), UserName = "admin", Password = "123", UserType = 1 },
                 new Users { UsersId = Guid.NewGuid(), UserName = "supplier", Password = "123", UserType = 0 }
-            );
+            );*/
         }
     }
 }
