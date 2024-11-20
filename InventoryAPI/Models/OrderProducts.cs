@@ -2,13 +2,13 @@
 {
 	public class OrderProducts
 	{
-		public Guid orderId {  get; set; }
+        public Guid OrderId { get; set; }
+        public Guid ProductId { get; set; }
+        public int Quantity { get; set; }
+        public double Price { get; set; }
 
-		public Guid productId { get; set; }
+        public Orders Order { get; set; }
+        public Products Product { get; set; }
 
-		public int quantity { get; set; }
-
-		public double price { get; set; }
-
-	}
+    }
 }
