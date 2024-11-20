@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using InventoryAPI.Models;
 using Microsoft.CodeAnalysis;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace InventoryAPI.Data
 {
@@ -20,6 +21,12 @@ namespace InventoryAPI.Data
         public DbSet<Orders> Order { get; set; } = default!;
         public DbSet<Invoices> Invoice { get; set; } = default!;
         public DbSet<OrderProducts> OrderProduct { get; set; } = default!;
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder
+                .ConfigureWarnings(warnings => warnings.Ignore(RelationalEventId.PendingModelChangesWarning));
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

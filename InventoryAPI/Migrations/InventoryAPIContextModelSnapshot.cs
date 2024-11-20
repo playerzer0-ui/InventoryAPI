@@ -44,15 +44,15 @@ namespace InventoryAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("2f2f140a-b5e4-4f48-a63f-3ee2c3b62492"),
+                            Id = new Guid("f99ffff3-4990-46ff-976d-87a77f93cb8b"),
                             InvoiceDate = new DateOnly(2024, 10, 12),
-                            OrderId = new Guid("b118dbdc-f569-42ec-9dbc-ea91485dd606")
+                            OrderId = new Guid("123e290b-0c59-48d9-92aa-2d348961928e")
                         },
                         new
                         {
-                            Id = new Guid("c3074d29-147a-405f-a6dd-f8208d5ee5ca"),
+                            Id = new Guid("3dd5e586-fc6d-4d00-83de-e6226f2e52df"),
                             InvoiceDate = new DateOnly(2024, 10, 25),
-                            OrderId = new Guid("e31bd55d-14ad-44b3-bb34-2639e6bcff9b")
+                            OrderId = new Guid("b020b0e1-cdff-47a0-9c83-37437a870d91")
                         });
                 });
 
@@ -79,15 +79,15 @@ namespace InventoryAPI.Migrations
                     b.HasData(
                         new
                         {
-                            OrderId = new Guid("b118dbdc-f569-42ec-9dbc-ea91485dd606"),
-                            ProductId = new Guid("8ff68a10-9e11-4154-9b49-32378b295965"),
+                            OrderId = new Guid("123e290b-0c59-48d9-92aa-2d348961928e"),
+                            ProductId = new Guid("042e512b-6389-4ab1-83ff-e2f50a97afd9"),
                             Price = 34.649999999999999,
                             Quantity = 35
                         },
                         new
                         {
-                            OrderId = new Guid("e31bd55d-14ad-44b3-bb34-2639e6bcff9b"),
-                            ProductId = new Guid("c74b4433-8ee0-4dee-80c8-8d7ba4252c9e"),
+                            OrderId = new Guid("b020b0e1-cdff-47a0-9c83-37437a870d91"),
+                            ProductId = new Guid("ce877c4d-6c14-46e2-a86f-e616755bde4f"),
                             Price = 79.5,
                             Quantity = 50
                         });
@@ -113,13 +113,13 @@ namespace InventoryAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("b118dbdc-f569-42ec-9dbc-ea91485dd606"),
+                            Id = new Guid("123e290b-0c59-48d9-92aa-2d348961928e"),
                             OrderDate = new DateOnly(2024, 10, 12),
                             OrderType = "Out"
                         },
                         new
                         {
-                            Id = new Guid("e31bd55d-14ad-44b3-bb34-2639e6bcff9b"),
+                            Id = new Guid("b020b0e1-cdff-47a0-9c83-37437a870d91"),
                             OrderDate = new DateOnly(2024, 10, 25),
                             OrderType = "In"
                         });
@@ -148,63 +148,63 @@ namespace InventoryAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("8ff68a10-9e11-4154-9b49-32378b295965"),
+                            Id = new Guid("042e512b-6389-4ab1-83ff-e2f50a97afd9"),
                             Price = 0.98999999999999999,
                             ProductName = "Apple",
                             Quantity = 150
                         },
                         new
                         {
-                            Id = new Guid("bc8c5d44-4d42-456a-927e-294bf5959a9f"),
+                            Id = new Guid("6a6dcd45-9493-40b1-8139-1b06cf0d4277"),
                             Price = 0.90000000000000002,
                             ProductName = "Pear",
                             Quantity = 75
                         },
                         new
                         {
-                            Id = new Guid("4d475875-34e7-4a37-9bd5-5bb843636271"),
+                            Id = new Guid("56a6b8be-be0e-4311-b96c-728ba64ddb42"),
                             Price = 1.25,
                             ProductName = "Pineapple",
                             Quantity = 62
                         },
                         new
                         {
-                            Id = new Guid("c74b4433-8ee0-4dee-80c8-8d7ba4252c9e"),
+                            Id = new Guid("ce877c4d-6c14-46e2-a86f-e616755bde4f"),
                             Price = 1.5900000000000001,
                             ProductName = "Avocado",
                             Quantity = 100
                         },
                         new
                         {
-                            Id = new Guid("38033716-440d-4bfb-abb2-58d54bd6d33b"),
+                            Id = new Guid("98e96954-3901-4e8f-bdb9-44e527085cc5"),
                             Price = 0.98999999999999999,
                             ProductName = "Mango",
                             Quantity = 55
                         },
                         new
                         {
-                            Id = new Guid("22fccc14-8603-4f03-b70c-a19ed34c72f5"),
+                            Id = new Guid("6692cd7d-c1c7-4946-8670-f59336d1f2cc"),
                             Price = 0.75,
                             ProductName = "Kiwi",
                             Quantity = 83
                         },
                         new
                         {
-                            Id = new Guid("2c5e55fd-2ccd-4f48-bd58-07a9b5a3410a"),
+                            Id = new Guid("5a7f113d-8b4d-4c4b-a77e-f1bd2281adfc"),
                             Price = 2.0,
                             ProductName = "Banana",
                             Quantity = 90
                         },
                         new
                         {
-                            Id = new Guid("993d0306-edf4-4b99-a358-d938ac71591c"),
+                            Id = new Guid("6b2a98be-f2dc-4d39-885e-1ef0cd1470a0"),
                             Price = 0.62,
                             ProductName = "Orange",
                             Quantity = 70
                         },
                         new
                         {
-                            Id = new Guid("fb567534-309b-4079-98eb-d8206e9611e3"),
+                            Id = new Guid("c310515d-731b-45b3-bec2-2dbb6c128e3a"),
                             Price = 0.58999999999999997,
                             ProductName = "Passion fruit",
                             Quantity = 120
@@ -235,14 +235,14 @@ namespace InventoryAPI.Migrations
                     b.HasData(
                         new
                         {
-                            UsersId = new Guid("65e68361-a1e8-499b-9f59-7b0a8eb4c904"),
+                            UsersId = new Guid("5a704bc3-673a-49ab-ba1e-390b80276547"),
                             Password = "123",
                             UserName = "admin",
                             UserType = 1
                         },
                         new
                         {
-                            UsersId = new Guid("d62f6c2c-f56a-46ea-85d1-4949cc55f73e"),
+                            UsersId = new Guid("02883fa4-182b-466b-9dda-569b179e8e0d"),
                             Password = "123",
                             UserName = "supplier",
                             UserType = 0
