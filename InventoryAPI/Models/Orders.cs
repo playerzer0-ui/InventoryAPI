@@ -5,10 +5,6 @@
 		public Guid Id { get; set; }
 
 		public DateOnly OrderDate {  get; set; }
-		
-		public Guid ProductId { get; set; }
-
-		public int Quantity { get; set; }
 
 		public string OrderType { get; set; }
 

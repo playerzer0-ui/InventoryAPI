@@ -17,8 +17,6 @@ namespace InventoryAPI.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     OrderDate = table.Column<DateOnly>(type: "date", nullable: false),
-                    ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Quantity = table.Column<int>(type: "int", nullable: false),
                     OrderType = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
