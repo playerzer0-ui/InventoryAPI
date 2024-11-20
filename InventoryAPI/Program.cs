@@ -16,6 +16,11 @@ namespace InventoryAPI
             builder.Services.AddDbContext<InventoryAPIContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("InventoryAPIContext") ?? throw new InvalidOperationException("Connection string 'InventoryAPIContext' not found.")));
 
+            builder.Services.AddAuthorizationBuilder()
+                .AddPolicy("AdminOnly", policy => policy.RequireClaim("UserType", "1")
+            );
+
+
             //add the JWT
             var jwtSettings = builder.Configuration.GetSection("JWT");
             var key = Encoding.ASCII.GetBytes(jwtSettings["Secret"]);
