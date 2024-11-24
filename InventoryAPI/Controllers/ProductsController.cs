@@ -103,12 +103,11 @@ namespace InventoryAPI.Controllers
         [Produces("text/csv")]
         public async Task<IActionResult> ExportProducts()
         {
-            var userTypeClaim = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "UserType")?.Value;
-            if (userTypeClaim == null)
-                return Unauthorized("UserType claim not found.");
-
-            //convert to int
-            int userType = int.Parse(userTypeClaim);
+            int userType = GetUserType();
+            if(userType == 0)
+            {
+                return Unauthorized("invalid user type");
+            }
 
             //calculate average price and update database
             await UpdateProductPricesAsync();
@@ -169,6 +168,17 @@ namespace InventoryAPI.Controllers
         private bool ProductsExists(Guid id)
         {
             return _context.Product.Any(e => e.Id == id);
+        }
+
+        protected int GetUserType()
+        {
+            var userTypeClaim = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "UserType")?.Value;
+            if (userTypeClaim == null)
+                return 0;
+
+            //convert to int
+            int userType = int.Parse(userTypeClaim);
+            return userType;
         }
     }
 }
