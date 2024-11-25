@@ -12,7 +12,6 @@ namespace InventoryAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-	[Authorize]
 	public class AuthController : ControllerBase
     {
         private readonly InventoryAPIContext _context;

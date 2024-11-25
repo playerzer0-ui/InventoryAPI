@@ -54,7 +54,8 @@ namespace InventoryAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Products>>> GetProduct()
         {
-            return await _context.Product.ToListAsync();
+		
+			return await _context.Product.ToListAsync();
         }
 
         // GET: api/Products/5
