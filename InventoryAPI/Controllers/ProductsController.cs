@@ -9,12 +9,14 @@ using InventoryAPI.Data;
 using InventoryAPI.Dto;
 using InventoryAPI.Models;
 using System.Text;
+using Microsoft.AspNetCore.Authorization;
 
 namespace InventoryAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-	
+	[Authorize]
+
 	public class ProductsController : ControllerBase
     {
         private readonly InventoryAPIContext _context;
