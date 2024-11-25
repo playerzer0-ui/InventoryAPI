@@ -9,12 +9,15 @@ using InventoryAPI.Data;
 using InventoryAPI.Dto;
 using InventoryAPI.Models;
 using System.Text;
+using Microsoft.AspNetCore.Authorization;
 
 namespace InventoryAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductsController : ControllerBase
+	[Authorize]
+
+	public class ProductsController : ControllerBase
     {
         private readonly InventoryAPIContext _context;
 
@@ -51,7 +54,8 @@ namespace InventoryAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Products>>> GetProduct()
         {
-            return await _context.Product.ToListAsync();
+		
+			return await _context.Product.ToListAsync();
         }
 
         // GET: api/Products/5

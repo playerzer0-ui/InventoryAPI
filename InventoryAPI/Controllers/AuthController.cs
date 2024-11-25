@@ -6,12 +6,13 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using InventoryAPI.Dto;
 using System.Text;
+using Microsoft.AspNetCore.Authorization;
 
 namespace InventoryAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthController : ControllerBase
+	public class AuthController : ControllerBase
     {
         private readonly InventoryAPIContext _context;
         private readonly IConfiguration _configuration;
