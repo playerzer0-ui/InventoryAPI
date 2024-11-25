@@ -3,3 +3,7 @@ https://www.c-sharpcorner.com/article/jwt-authentication-and-authorization-in-ne
 
 Authorize Policy
 https://learn.microsoft.com/en-us/aspnet/core/security/authorization/policies?view=aspnetcore-8.0
+
+save to csv
+https://stackoverflow.com/questions/18757097/writing-data-into-csv-file-in-c-sharp
+https://stackoverflow.com/questions/27734201/serializing-a-list-of-dynamic-objects-to-a-csv-with-servicestack-text

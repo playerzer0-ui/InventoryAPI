@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using InventoryAPI.Data;
+using InventoryAPI.Dto;
 using InventoryAPI.Models;
-using Microsoft.AspNetCore.Authorization;
 
 namespace InventoryAPI.Controllers
 {
@@ -22,6 +22,30 @@ namespace InventoryAPI.Controllers
         {
             _context = context;
         }
+
+        [HttpPut("UpdatePrices")]
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public async Task UpdateProductPricesAsync()
+        {
+            var products = await _context.Product
+                .Include(p => p.OrderProducts)
+                .ToListAsync();
+
+            foreach (var product in products)
+            {
+                if (product.OrderProducts.Any())
+                {
+                    product.Price = product.OrderProducts.Average(op => op.Price);
+                }
+                else
+                {
+                    product.Price = 0; // Default to 0 if no orders exist
+                }
+            }
+
+            await _context.SaveChangesAsync(); // Save changes to the database
+        }
+
 
         // GET: api/Products
         [HttpGet]
@@ -75,6 +99,45 @@ namespace InventoryAPI.Controllers
             return NoContent();
         }
 
+        [HttpGet("export")]
+        [Produces("text/csv")]
+        public async Task<IActionResult> ExportProducts()
+        {
+            int userType = GetUserType();
+            if(userType == 0)
+            {
+                return Unauthorized("invalid user type");
+            }
+
+            //calculate average price and update database
+            await UpdateProductPricesAsync();
+            var products = await _context.Product.ToListAsync();
+
+            // Map to DTO and exclude Price if userType is 0
+            var productDtos = products.Select(p => new ProductDto
+            {
+                Id = p.Id,
+                Name = p.ProductName,
+                Quantity = p.Quantity,
+                Price = userType == 0 ? (double?)null : p.Price // Exclude price for userType 0
+            }).ToList();
+
+            // Generate CSV content
+            var csvBuilder = new StringBuilder();
+            csvBuilder.AppendLine("Id,Name,Quantity,Price");
+
+            foreach (var product in productDtos)
+            {
+                csvBuilder.AppendLine($"{product.Id},{product.Name},{product.Quantity},{(product.Price.HasValue ? product.Price.Value.ToString("F2") : "")}");
+            }
+
+            var csvContent = csvBuilder.ToString();
+            var csvBytes = Encoding.UTF8.GetBytes(csvContent);
+
+            // Return as a file download
+            return File(csvBytes, "text/csv", "Products.csv");
+        }
+
         // POST: api/Products
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
@@ -105,6 +168,17 @@ namespace InventoryAPI.Controllers
         private bool ProductsExists(Guid id)
         {
             return _context.Product.Any(e => e.Id == id);
+        }
+
+        protected int GetUserType()
+        {
+            var userTypeClaim = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "UserType")?.Value;
+            if (userTypeClaim == null)
+                return 0;
+
+            //convert to int
+            int userType = int.Parse(userTypeClaim);
+            return userType;
         }
     }
 }
