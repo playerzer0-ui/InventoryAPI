@@ -7,12 +7,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using InventoryAPI.Data;
 using InventoryAPI.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace InventoryAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductsController : ControllerBase
+	[Authorize]
+	public class ProductsController : ControllerBase
     {
         private readonly InventoryAPIContext _context;
 
