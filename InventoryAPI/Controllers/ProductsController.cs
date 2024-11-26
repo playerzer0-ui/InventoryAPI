@@ -54,7 +54,22 @@ namespace InventoryAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Products>>> GetProduct()
         {
-		
+			int userType = GetUserType();
+			if (userType == 0)
+			{
+				var products = await _context.Product.ToListAsync();
+
+				var productDtos = products.Select(p => new ProductDto
+				{
+					Id = p.Id,
+					Name = p.ProductName,
+					Quantity = p.Quantity
+					//supplier can't see the price 
+				}).ToList(); 
+
+                return Ok(productDtos);
+			}
+
 			return await _context.Product.ToListAsync();
         }
 
