@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using InventoryAPI.Data;
 using InventoryAPI.Models;
 using Microsoft.AspNetCore.Authorization;
+using InventoryAPI.Dto;
 
 namespace InventoryAPI.Controllers
 {
@@ -27,7 +28,23 @@ namespace InventoryAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<OrderProducts>>> GetOrderProduct()
         {
-            return await _context.OrderProduct.ToListAsync();
+			int userType = GetUserType();
+			if (userType == 0)
+			{
+				var orderProducts = await _context.OrderProduct.ToListAsync();
+
+				var orderProductsDto = orderProducts.Select(oP => new OrderProductsDto
+				{
+					OrderId = oP.OrderId,
+					ProductId = oP.ProductId,
+					Quantity = oP.Quantity
+					//supplier can't see the price 
+				}).ToList();
+
+				return Ok(orderProductsDto);
+			}
+
+			return await _context.OrderProduct.ToListAsync();
         }
 
         // GET: api/OrderProducts/5
@@ -120,5 +137,16 @@ namespace InventoryAPI.Controllers
         {
             return _context.OrderProduct.Any(e => e.OrderId == id);
         }
-    }
+
+		protected int GetUserType()
+		{
+			var userTypeClaim = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "UserType")?.Value;
+			if (userTypeClaim == null)
+				return 0;
+
+			//convert to int
+			int userType = int.Parse(userTypeClaim);
+			return userType;
+		}
+	}
 }
