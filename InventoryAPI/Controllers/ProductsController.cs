@@ -92,7 +92,6 @@ namespace InventoryAPI.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutProducts(Guid id, ProductDto productDto)
         {
-            int userType = GetUserType();
             // Check if the ID in the route matches the ID in the DTO
             if (id != productDto.Id)
             {
@@ -111,7 +110,7 @@ namespace InventoryAPI.Controllers
             existingProduct.Quantity = productDto.Quantity;
 
             // Check if the price is provided and update only if it is
-            if (userType > 0)
+            if (productDto.Price.HasValue)
             {
                 existingProduct.Price = productDto.Price.Value;
             }
@@ -122,22 +121,7 @@ namespace InventoryAPI.Controllers
             // Save changes
             try
             {
-				int userType = GetUserType();
-				if (userType == 0)
-				{
-					var updateSupplierProductsDto = new Products
-					{
-                        //id not able to update
-						ProductName = updateProducts.ProductName,
-						Quantity = updateProducts.Quantity
-						//Supplier won't see the price
-					};
-
-					_context.Product.Update(updateSupplierProductsDto);
-					await _context.SaveChangesAsync();
-				}
-
-				await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -153,6 +137,7 @@ namespace InventoryAPI.Controllers
 
             return NoContent(); // Return 204 status code to indicate success
         }
+
 
 
         [HttpGet("export")]
