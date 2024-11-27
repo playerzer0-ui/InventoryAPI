@@ -90,18 +90,33 @@ namespace InventoryAPI.Controllers
         // PUT: api/Products/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProducts(Guid id, Products products)
+        public async Task<IActionResult> PutProducts(Guid id, Products updateProducts)
         {
-            if (id != products.Id)
+            if (id != updateProducts.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(products).State = EntityState.Modified;
+            _context.Entry(updateProducts).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync();
+				int userType = GetUserType();
+				if (userType == 0)
+				{
+					var updateSupplierProductsDto = new Products
+					{
+                        //id not able to update
+						ProductName = updateProducts.ProductName,
+						Quantity = updateProducts.Quantity
+						//Supplier won't see the price
+					};
+
+					_context.Product.Update(updateSupplierProductsDto);
+					await _context.SaveChangesAsync();
+				}
+
+				await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
