@@ -90,15 +90,36 @@ namespace InventoryAPI.Controllers
         // PUT: api/Products/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProducts(Guid id, Products products)
+        public async Task<IActionResult> PutProducts(Guid id, ProductDto productDto)
         {
-            if (id != products.Id)
+            int userType = GetUserType();
+            // Check if the ID in the route matches the ID in the DTO
+            if (id != productDto.Id)
             {
-                return BadRequest();
+                return BadRequest("The ID in the URL does not match the ID in the request body.");
             }
 
-            _context.Entry(products).State = EntityState.Modified;
+            // Retrieve the product from the database
+            var existingProduct = await _context.Product.FindAsync(id);
+            if (existingProduct == null)
+            {
+                return NotFound($"Product with ID {id} not found.");
+            }
 
+            // Map the fields from the DTO to the existing product entity
+            existingProduct.ProductName = productDto.Name;
+            existingProduct.Quantity = productDto.Quantity;
+
+            // Check if the price is provided and update only if it is
+            if (userType > 0)
+            {
+                existingProduct.Price = productDto.Price.Value;
+            }
+
+            // Mark the product as modified
+            _context.Entry(existingProduct).State = EntityState.Modified;
+
+            // Save changes
             try
             {
                 await _context.SaveChangesAsync();
@@ -107,7 +128,7 @@ namespace InventoryAPI.Controllers
             {
                 if (!ProductsExists(id))
                 {
-                    return NotFound();
+                    return NotFound($"Product with ID {id} not found after the update attempt.");
                 }
                 else
                 {
@@ -115,8 +136,9 @@ namespace InventoryAPI.Controllers
                 }
             }
 
-            return NoContent();
+            return NoContent(); // Return 204 status code to indicate success
         }
+
 
         [HttpGet("export")]
         [Produces("text/csv")]
