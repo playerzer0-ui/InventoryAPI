@@ -92,6 +92,7 @@ namespace InventoryAPI.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutProducts(Guid id, ProductDto productDto)
         {
+            int userType = GetUserType();
             // Check if the ID in the route matches the ID in the DTO
             if (id != productDto.Id)
             {
@@ -109,8 +110,7 @@ namespace InventoryAPI.Controllers
             existingProduct.ProductName = productDto.Name;
             existingProduct.Quantity = productDto.Quantity;
 
-            // Check if the price is provided and update only if it is
-            if (productDto.Price.HasValue)
+            if (userType > 0)
             {
                 existingProduct.Price = productDto.Price.Value;
             }
