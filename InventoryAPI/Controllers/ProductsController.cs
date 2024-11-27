@@ -122,7 +122,22 @@ namespace InventoryAPI.Controllers
             // Save changes
             try
             {
-                await _context.SaveChangesAsync();
+				int userType = GetUserType();
+				if (userType == 0)
+				{
+					var updateSupplierProductsDto = new Products
+					{
+                        //id not able to update
+						ProductName = updateProducts.ProductName,
+						Quantity = updateProducts.Quantity
+						//Supplier won't see the price
+					};
+
+					_context.Product.Update(updateSupplierProductsDto);
+					await _context.SaveChangesAsync();
+				}
+
+				await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -182,12 +197,38 @@ namespace InventoryAPI.Controllers
         // POST: api/Products
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Products>> PostProducts(Products products)
+        public async Task<ActionResult<Products>> PostProducts(EditProductsDto editProducts)
         {
-            _context.Product.Add(products);
+            int userType = GetUserType();
+            if (userType == 0)
+            {
+				var editSupplierProductsDto = new Products
+				{
+					ProductName = editProducts.Name,
+					Quantity = editProducts.Quantity,
+					//Supplier won't see the price
+				};
+
+				_context.Product.Add(editSupplierProductsDto);
+				await _context.SaveChangesAsync();
+
+				return CreatedAtAction("GetProducts", new { id = editSupplierProductsDto.Id }, editSupplierProductsDto);
+            }
+            else
+            {
+             var editProductsDto = new Products
+            {
+                ProductName = editProducts.Name,
+                Quantity = editProducts.Quantity,
+                Price = editProducts.Price
+            };
+
+            _context.Product.Add(editProductsDto);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetProducts", new { id = products.Id }, products);
+		    return CreatedAtAction("GetProducts", new { id = editProductsDto.Id }, editProductsDto);
+            }
+           
         }
 
         // DELETE: api/Products/5
