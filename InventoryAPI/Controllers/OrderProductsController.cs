@@ -48,17 +48,50 @@ namespace InventoryAPI.Controllers
         }
 
         // GET: api/OrderProducts/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<OrderProducts>> GetOrderProducts(Guid id)
+        [HttpGet("o/{orderId}")]
+        public async Task<ActionResult<IEnumerable<OrderProductsDto>>> GetOrderProductsByOrderId(Guid orderId)
         {
-            var orderProducts = await _context.OrderProduct.FindAsync(id);
+            int userType = GetUserType();
+            var orderProducts = await _context.OrderProduct
+                .Where(op => op.OrderId == orderId)
+                .Select(op => new OrderProductsDto
+                {
+                    OrderId = op.OrderId,
+                    ProductId = op.ProductId,
+                    Quantity = op.Quantity,
+                    Price = userType == 0 ? (double?)null : op.Price
+                })
+                .ToListAsync();
 
-            if (orderProducts == null)
+            if (orderProducts.Count == 0)
             {
-                return NotFound();
+                return NotFound($"No order products found for OrderId {orderId}");
             }
 
-            return orderProducts;
+            return Ok(orderProducts);
+        }
+
+        [HttpGet("p/{productId}")]
+        public async Task<ActionResult<IEnumerable<OrderProductsDto>>> GetOrderProductsByProductId(Guid productId)
+        {
+            int userType = GetUserType();
+            var orderProducts = await _context.OrderProduct
+                .Where(op => op.ProductId == productId)
+                .Select(op => new OrderProductsDto
+                {
+                    OrderId = op.OrderId,
+                    ProductId = op.ProductId,
+                    Quantity = op.Quantity,
+                    Price = userType == 0 ? (double?)null : op.Price
+                })
+                .ToListAsync();
+
+            if (orderProducts.Count == 0)
+            {
+                return NotFound($"No order products found for ProductId {productId}");
+            }
+
+            return Ok(orderProducts);
         }
 
         // PUT: api/OrderProducts/5
@@ -117,8 +150,31 @@ namespace InventoryAPI.Controllers
         // POST: api/OrderProducts
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<OrderProducts>> PostOrderProducts(OrderProducts orderProducts)
+        public async Task<ActionResult<OrderProducts>> PostOrderProducts(OrderProductsDto dto)
         {
+            var orderProducts = new OrderProducts();
+            int userType = GetUserType();
+            if(userType == 0)
+            {
+                orderProducts = new OrderProducts
+                {
+                    OrderId = dto.OrderId,
+                    ProductId = dto.ProductId,
+                    Quantity = dto.Quantity,
+                    Price = 0
+                };
+            }
+            else
+            {
+                orderProducts = new OrderProducts
+                {
+                    OrderId = dto.OrderId,
+                    ProductId = dto.ProductId,
+                    Quantity = dto.Quantity,
+                    Price = (double)dto.Price
+                };
+            }
+
             _context.OrderProduct.Add(orderProducts);
             try
             {

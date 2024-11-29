@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using InventoryAPI.Data;
+using InventoryAPI.Dto;
 using InventoryAPI.Models;
 using Microsoft.AspNetCore.Authorization;
 
@@ -78,8 +79,13 @@ namespace InventoryAPI.Controllers
         // POST: api/Orders
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Orders>> PostOrders(Orders orders)
+        public async Task<ActionResult<Orders>> PostOrders(OrderDto dto)
         {
+            var orders = new Orders
+            {
+                OrderDate = dto.OrderDate,
+                OrderType = dto.OrderType
+            };
             _context.Order.Add(orders);
             await _context.SaveChangesAsync();
 
