@@ -164,7 +164,7 @@ namespace InventoryAPI.Controllers
             }
 
             //calculate average price and update database
-            await UpdateProductPricesAsync();
+            //await UpdateProductPricesAsync();
             var products = await _context.Product.ToListAsync();
 
             // Map to DTO and exclude Price if userType is 0

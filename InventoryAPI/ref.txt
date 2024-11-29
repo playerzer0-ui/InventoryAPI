@@ -8,5 +8,9 @@ save to csv
 https://stackoverflow.com/questions/18757097/writing-data-into-csv-file-in-c-sharp
 https://stackoverflow.com/questions/27734201/serializing-a-list-of-dynamic-objects-to-a-csv-with-servicestack-text
 
+save to pdf (need to install itext7 and it's bouncy castle adapter)
+https://www.codeguru.com/dotnet/generating-a-pdf-document-using-c-net-and-itext-7/ (use memorystream, it saves to a different source)
+https://stackoverflow.com/questions/36042614/how-to-return-a-pdf-from-a-web-api-application
+
 host
 https://www.youtube.com/watch?v=EKqXAMLsnKQ
