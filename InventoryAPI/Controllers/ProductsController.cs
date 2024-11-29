@@ -84,7 +84,20 @@ namespace InventoryAPI.Controllers
                 return NotFound();
             }
 
-            return products;
+			int userType = GetUserType();
+			if (userType == 0)
+            {
+                var productDtos = new ProductDto
+			{
+				Id = products.Id,
+				Name = products.ProductName,
+				Quantity = products.Quantity
+				//supplier can't see the price 
+			};
+				return Ok(productDtos);
+			}
+
+			return products;
         }
 
         // PUT: api/Products/5
@@ -110,7 +123,7 @@ namespace InventoryAPI.Controllers
             existingProduct.ProductName = productDto.Name;
             existingProduct.Quantity = productDto.Quantity;
 
-            if (userType > 0)
+            if (userType == 1)
             {
                 existingProduct.Price = productDto.Price.Value;
             }
