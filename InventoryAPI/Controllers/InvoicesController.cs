@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using InventoryAPI.Data;
+using InventoryAPI.Dto;
 using InventoryAPI.Models;
 using Microsoft.AspNetCore.Authorization;
 
@@ -13,7 +14,7 @@ namespace InventoryAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    [Authorize(Policy = "AdminOnly")]
     public class InvoicesController : ControllerBase
     {
         private readonly InventoryAPIContext _context;
@@ -47,14 +48,28 @@ namespace InventoryAPI.Controllers
         // PUT: api/Invoices/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutInvoices(Guid id, Invoices invoices)
+        public async Task<IActionResult> PutInvoices(Guid id, EditInvoiceDto editInvoiceDto)
         {
-            if (id != invoices.Id)
+            // Validate that the route ID matches the DTO ID
+            if (id != editInvoiceDto.Id)
             {
-                return BadRequest();
+                return BadRequest("The ID in the URL does not match the Invoice ID in the request body.");
             }
 
-            _context.Entry(invoices).State = EntityState.Modified;
+            // Retrieve the existing invoice record
+            var existingInvoice = await _context.Invoice.FindAsync(id);
+
+            if (existingInvoice == null)
+            {
+                return NotFound($"Invoice with ID {id} not found.");
+            }
+
+            // Update fields from the DTO
+            existingInvoice.InvoiceDate = editInvoiceDto.InvoiceDate;
+            existingInvoice.OrderId = editInvoiceDto.OrderId;
+
+            // Mark the entity as modified
+            _context.Entry(existingInvoice).State = EntityState.Modified;
 
             try
             {
@@ -64,7 +79,7 @@ namespace InventoryAPI.Controllers
             {
                 if (!InvoicesExists(id))
                 {
-                    return NotFound();
+                    return NotFound($"Invoice with ID {id} no longer exists.");
                 }
                 else
                 {
@@ -72,18 +87,24 @@ namespace InventoryAPI.Controllers
                 }
             }
 
-            return NoContent();
+            return NoContent(); // Return 204 No Content to indicate success
         }
 
         // POST: api/Invoices
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Invoices>> PostInvoices(Invoices invoices)
+        public async Task<ActionResult<Invoices>> PostInvoice(InvoiceDto dto)
         {
-            _context.Invoice.Add(invoices);
+            var invoice = new Invoices
+            {
+                InvoiceDate = dto.InvoiceDate,
+                OrderId = dto.OrderId
+            };
+
+            _context.Invoice.Add(invoice);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetInvoices", new { id = invoices.Id }, invoices);
+            return CreatedAtAction("GetInvoice", new { id = invoice.Id }, invoice);
         }
 
         // DELETE: api/Invoices/5
