@@ -48,14 +48,20 @@ namespace InventoryAPI.Controllers
         // PUT: api/Orders/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutOrders(Guid id, Orders orders)
+        public async Task<IActionResult> PutOrders(Guid id, EditOrderDto editOrderDto)
         {
-            if (id != orders.Id)
+            if (id != editOrderDto.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(orders).State = EntityState.Modified;
+			//var existingProduct = await _context.Product.FindAsync(id);
+			//if (existingProduct == null)
+			//{
+			//	return NotFound($"Product with ID {id} not found.");
+			//}
+
+			_context.Entry(editOrderDto).State = EntityState.Modified;
 
             try
             {
