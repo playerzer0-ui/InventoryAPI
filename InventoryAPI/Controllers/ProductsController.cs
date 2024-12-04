@@ -158,10 +158,6 @@ namespace InventoryAPI.Controllers
         public async Task<IActionResult> ExportProducts()
         {
             int userType = GetUserType();
-            if(userType == 0)
-            {
-                return Unauthorized("invalid user type");
-            }
 
             //calculate average price and update database
             //await UpdateProductPricesAsync();
