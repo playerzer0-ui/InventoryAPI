@@ -196,10 +196,10 @@ namespace InventoryAPI.Controllers
         }
 
         // DELETE: api/OrderProducts/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteOrderProducts(Guid id)
+        [HttpDelete("o/{orderId}, p/{productId}")]
+        public async Task<IActionResult> DeleteOrderProducts(Guid orderId, Guid productId)
         {
-            var orderProducts = await _context.OrderProduct.FindAsync(id);
+            var orderProducts = await _context.OrderProduct.FindAsync(orderId, productId);
             if (orderProducts == null)
             {
                 return NotFound();
