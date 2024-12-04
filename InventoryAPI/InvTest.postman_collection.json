@@ -1,0 +1,3843 @@
+{
+	"info": {
+		"_postman_id": "511556d5-ee21-4953-a725-1c839c2c43c3",
+		"name": "InvTest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33040112",
+		"_collection_link": "https://test-team-7744.postman.co/workspace/test-team-Workspace~d2fae06c-c3dc-40bf-8832-2487dcc27485/collection/32816800-511556d5-ee21-4953-a725-1c839c2c43c3?action=share&source=collection_link&creator=33040112"
+	},
+	"item": [
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "admin",
+					"item": [
+						{
+							"name": "getAllProducts",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"",
+											"pm.test(\"Response status code is 200\", function () {",
+											"    pm.expect(pm.response.code).to.equal(200);",
+											"});",
+											"",
+											"",
+											"pm.test(\"Response has the required fields\", function () {",
+											"    const responseData = pm.response.json();",
+											"    ",
+											"    pm.expect(responseData).to.be.an('array');",
+											"    responseData.forEach(function(product) {",
+											"        pm.expect(product).to.be.an('object');",
+											"        pm.expect(product.id).to.exist;",
+											"        pm.expect(product.productName).to.exist;",
+											"        pm.expect(product.quantity).to.exist;",
+											"        pm.expect(product.price).to.exist;",
+											"        pm.expect(product.orderProducts).to.exist;",
+											"    });",
+											"});",
+											"",
+											"",
+											"pm.test(\"Id is a non-empty string\", function () {",
+											"  const responseData = pm.response.json();",
+											"  ",
+											"  pm.expect(responseData).to.be.an('array');",
+											"  responseData.forEach(function(item) {",
+											"    pm.expect(item.id).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Id should be a non-empty string\");",
+											"  });",
+											"});",
+											"",
+											"",
+											"pm.test(\"Quantity and price are non-negative numbers\", function () {",
+											"    const responseData = pm.response.json();",
+											"    ",
+											"    pm.expect(responseData).to.be.an('array');",
+											"    ",
+											"    responseData.forEach(function(product) {",
+											"        pm.expect(product.quantity).to.be.at.least(0);",
+											"        pm.expect(product.price).to.be.at.least(0);",
+											"    });",
+											"});",
+											"",
+											"",
+											"pm.test(\"OrderProducts array is present and contains expected number of elements\", function () {",
+											"    const responseData = pm.response.json();",
+											"    ",
+											"    pm.expect(responseData).to.be.an('array');",
+											"    responseData.forEach(function (product) {",
+											"        pm.expect(product.orderProducts).to.be.an('array');",
+											"        pm.expect(product.orderProducts.length).to.equal(0);",
+											"    });",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "jwt",
+									"jwt": [
+										{
+											"key": "payload",
+											"value": "{\r\n  \"unique_name\": \"admin\",\r\n  \"UserType\": \"1\",\r\n  \"nbf\": 1732704891,\r\n  \"exp\": 1735296891,\r\n  \"iat\": 1732704891\r\n}",
+											"type": "string"
+										},
+										{
+											"key": "secret",
+											"value": "JWTAuthenticationHIGHsecuredPasswordVVVp1OH7Xzyr",
+											"type": "string"
+										},
+										{
+											"key": "algorithm",
+											"value": "HS256",
+											"type": "string"
+										},
+										{
+											"key": "isSecretBase64Encoded",
+											"value": false,
+											"type": "boolean"
+										},
+										{
+											"key": "addTokenTo",
+											"value": "header",
+											"type": "string"
+										},
+										{
+											"key": "headerPrefix",
+											"value": "Bearer",
+											"type": "string"
+										},
+										{
+											"key": "queryParamKey",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "header",
+											"value": "{}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7188/api/Products",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7188",
+									"path": [
+										"api",
+										"Products"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getProductByID",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "jwt",
+									"jwt": [
+										{
+											"key": "payload",
+											"value": "{\r\n  \"unique_name\": \"admin\",\r\n  \"UserType\": \"1\",\r\n  \"nbf\": 1732704891,\r\n  \"exp\": 1735296891,\r\n  \"iat\": 1732704891\r\n}",
+											"type": "string"
+										},
+										{
+											"key": "secret",
+											"value": "JWTAuthenticationHIGHsecuredPasswordVVVp1OH7Xzyr",
+											"type": "string"
+										},
+										{
+											"key": "algorithm",
+											"value": "HS256",
+											"type": "string"
+										},
+										{
+											"key": "isSecretBase64Encoded",
+											"value": false,
+											"type": "boolean"
+										},
+										{
+											"key": "addTokenTo",
+											"value": "header",
+											"type": "string"
+										},
+										{
+											"key": "headerPrefix",
+											"value": "Bearer",
+											"type": "string"
+										},
+										{
+											"key": "queryParamKey",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "header",
+											"value": "{}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7188/api/Products/8274e42e-01d5-43af-d3e5-08dd0ecbc593",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7188",
+									"path": [
+										"api",
+										"Products",
+										"8274e42e-01d5-43af-d3e5-08dd0ecbc593"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "export",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "jwt",
+									"jwt": [
+										{
+											"key": "secret",
+											"value": "JWTAuthenticationHIGHsecuredPasswordVVVp1OH7Xzyr",
+											"type": "string"
+										},
+										{
+											"key": "payload",
+											"value": "{\r\n  \"unique_name\": \"admin\",\r\n  \"UserType\": \"1\",\r\n  \"nbf\": 1732882239,\r\n  \"exp\": 1735474239,\r\n  \"iat\": 1732882239\r\n}",
+											"type": "string"
+										},
+										{
+											"key": "isSecretBase64Encoded",
+											"value": false,
+											"type": "boolean"
+										},
+										{
+											"key": "algorithm",
+											"value": "HS256",
+											"type": "string"
+										},
+										{
+											"key": "addTokenTo",
+											"value": "header",
+											"type": "string"
+										},
+										{
+											"key": "headerPrefix",
+											"value": "Bearer",
+											"type": "string"
+										},
+										{
+											"key": "queryParamKey",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "header",
+											"value": "{}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7188/api/Products/export",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7188",
+									"path": [
+										"api",
+										"Products",
+										"export"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "addProduct",
+							"request": {
+								"auth": {
+									"type": "jwt",
+									"jwt": [
+										{
+											"key": "payload",
+											"value": "{\r\n  \"unique_name\": \"admin\",\r\n  \"UserType\": \"1\",\r\n  \"nbf\": 1732704891,\r\n  \"exp\": 1735296891,\r\n  \"iat\": 1732704891\r\n}",
+											"type": "string"
+										},
+										{
+											"key": "secret",
+											"value": "JWTAuthenticationHIGHsecuredPasswordVVVp1OH7Xzyr",
+											"type": "string"
+										},
+										{
+											"key": "algorithm",
+											"value": "HS256",
+											"type": "string"
+										},
+										{
+											"key": "isSecretBase64Encoded",
+											"value": false,
+											"type": "boolean"
+										},
+										{
+											"key": "addTokenTo",
+											"value": "header",
+											"type": "string"
+										},
+										{
+											"key": "headerPrefix",
+											"value": "Bearer",
+											"type": "string"
+										},
+										{
+											"key": "queryParamKey",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "header",
+											"value": "{}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"name\":\"Apple\",\r\n  \"quantity\": 50,\r\n  \"price\": 0.50\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7188/api/Products/",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7188",
+									"path": [
+										"api",
+										"Products",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "updateProduct",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 204\", function () {\r",
+											"    pm.expect(pm.response.code).to.equal(204);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "jwt",
+									"jwt": [
+										{
+											"key": "payload",
+											"value": "{\r\n  \"unique_name\": \"admin\",\r\n  \"UserType\": \"1\",\r\n  \"nbf\": 1732704891,\r\n  \"exp\": 1735296891,\r\n  \"iat\": 1732704891\r\n}",
+											"type": "string"
+										},
+										{
+											"key": "secret",
+											"value": "JWTAuthenticationHIGHsecuredPasswordVVVp1OH7Xzyr",
+											"type": "string"
+										},
+										{
+											"key": "isSecretBase64Encoded",
+											"value": false,
+											"type": "boolean"
+										},
+										{
+											"key": "algorithm",
+											"value": "HS256",
+											"type": "string"
+										},
+										{
+											"key": "addTokenTo",
+											"value": "header",
+											"type": "string"
+										},
+										{
+											"key": "headerPrefix",
+											"value": "Bearer",
+											"type": "string"
+										},
+										{
+											"key": "queryParamKey",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "header",
+											"value": "{}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": \"19dda33b-33a4-43f2-5f4f-08dd1448645a\",\r\n    \"name\": \"Gold kiwi\",\r\n    \"quantity\": 109,\r\n    \"price\": 0.87\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7188/api/Products/19dda33b-33a4-43f2-5f4f-08dd1448645a",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7188",
+									"path": [
+										"api",
+										"Products",
+										"19dda33b-33a4-43f2-5f4f-08dd1448645a"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "deleteProduct",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "jwt",
+									"jwt": [
+										{
+											"key": "payload",
+											"value": "{\r\n  \"unique_name\": \"admin\",\r\n  \"UserType\": \"1\",\r\n  \"nbf\": 1732704891,\r\n  \"exp\": 1735296891,\r\n  \"iat\": 1732704891\r\n}",
+											"type": "string"
+										},
+										{
+											"key": "secret",
+											"value": "JWTAuthenticationHIGHsecuredPasswordVVVp1OH7Xzyr",
+											"type": "string"
+										},
+										{
+											"key": "isSecretBase64Encoded",
+											"value": false,
+											"type": "boolean"
+										},
+										{
+											"key": "algorithm",
+											"value": "HS256",
+											"type": "string"
+										},
+										{
+											"key": "addTokenTo",
+											"value": "header",
+											"type": "string"
+										},
+										{
+											"key": "headerPrefix",
+											"value": "Bearer",
+											"type": "string"
+										},
+										{
+											"key": "queryParamKey",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "header",
+											"value": "{}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7188/api/Products/6692cd7d-c1c7-4946-8670-f59336d1f2cc",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7188",
+									"path": [
+										"api",
+										"Products",
+										"6692cd7d-c1c7-4946-8670-f59336d1f2cc"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"auth": {
+						"type": "jwt",
+						"jwt": [
+							{
+								"key": "payload",
+								"value": "{\r\n  \"unique_name\": \"admin\",\r\n  \"UserType\": \"1\",\r\n  \"nbf\": 1732704625,\r\n  \"exp\": 1735296625,\r\n  \"iat\": 1732704625\r\n}",
+								"type": "string"
+							},
+							{
+								"key": "secret",
+								"value": "JWTAuthenticationMAYBEHIGHsecuredPasswordVVVp1OH7Xzyr",
+								"type": "string"
+							},
+							{
+								"key": "algorithm",
+								"value": "HS256",
+								"type": "string"
+							},
+							{
+								"key": "isSecretBase64Encoded",
+								"value": false,
+								"type": "boolean"
+							},
+							{
+								"key": "addTokenTo",
+								"value": "header",
+								"type": "string"
+							},
+							{
+								"key": "headerPrefix",
+								"value": "Bearer",
+								"type": "string"
+							},
+							{
+								"key": "queryParamKey",
+								"value": "token",
+								"type": "string"
+							},
+							{
+								"key": "header",
+								"value": "{}",
+								"type": "string"
+							}
+						]
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"packages": {},
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"packages": {},
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "supplier",
+					"item": [
+						{
+							"name": "getAllProducts",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"",
+											"pm.test(\"Response has the required fields - id, name, quantity, and price\", function () {",
+											"    const responseData = pm.response.json();",
+											"    ",
+											"    pm.expect(responseData).to.be.an('array');",
+											"    responseData.forEach(function(product) {",
+											"        pm.expect(product).to.have.property('id');",
+											"        pm.expect(product).to.have.property('name');",
+											"        pm.expect(product).to.have.property('quantity');",
+											"        pm.expect(product).to.have.property('price');",
+											"    });",
+											"});",
+											"",
+											"",
+											"pm.test(\"Id is a non-empty string\", function () {",
+											"    const responseData = pm.response.json();",
+											"    ",
+											"    pm.expect(responseData).to.be.an('array');",
+											"    responseData.forEach(function(product) {",
+											"        pm.expect(product.id).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Id should not be empty\");",
+											"    });",
+											"});",
+											"",
+											"",
+											"pm.test(\"Quantity is a non-negative integer\", function () {",
+											"  const responseData = pm.response.json();",
+											"  ",
+											"  pm.expect(responseData).to.be.an('array');",
+											"  responseData.forEach(function(product) {",
+											"    pm.expect(product.quantity).to.be.a('number').and.to.be.at.least(0);",
+											"  });",
+											"});",
+											"",
+											"",
+											"pm.test(\"Price is either null or a valid number\", function () {",
+											"    const responseData = pm.response.json();",
+											"    ",
+											"    pm.expect(responseData).to.be.an('array');",
+											"    responseData.forEach(function(product) {",
+											"        pm.expect(product.price).to.satisfy(function (value) {",
+											"            return value === null || !isNaN(value);",
+											"        }, \"Price should be either null or a valid number\");",
+											"    });",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "jwt",
+									"jwt": [
+										{
+											"key": "payload",
+											"value": "{\r\n  \"unique_name\": \"supplier\",\r\n  \"UserType\": \"0\",\r\n  \"nbf\": 1732885703,\r\n  \"exp\": 1735477703,\r\n  \"iat\": 1732885703\r\n}",
+											"type": "string"
+										},
+										{
+											"key": "secret",
+											"value": "JWTAuthenticationHIGHsecuredPasswordVVVp1OH7Xzyr",
+											"type": "string"
+										},
+										{
+											"key": "isSecretBase64Encoded",
+											"value": false,
+											"type": "boolean"
+										},
+										{
+											"key": "algorithm",
+											"value": "HS256",
+											"type": "string"
+										},
+										{
+											"key": "addTokenTo",
+											"value": "header",
+											"type": "string"
+										},
+										{
+											"key": "headerPrefix",
+											"value": "Bearer",
+											"type": "string"
+										},
+										{
+											"key": "queryParamKey",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "header",
+											"value": "{}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7188/api/Products",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7188",
+									"path": [
+										"api",
+										"Products"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getProductByID",
+							"request": {
+								"auth": {
+									"type": "jwt",
+									"jwt": [
+										{
+											"key": "payload",
+											"value": "{\r\n  \"unique_name\": \"supplier\",\r\n  \"UserType\": \"0\",\r\n  \"nbf\": 1732885703,\r\n  \"exp\": 1735477703,\r\n  \"iat\": 1732885703\r\n}",
+											"type": "string"
+										},
+										{
+											"key": "secret",
+											"value": "JWTAuthenticationHIGHsecuredPasswordVVVp1OH7Xzyr",
+											"type": "string"
+										},
+										{
+											"key": "isSecretBase64Encoded",
+											"value": false,
+											"type": "boolean"
+										},
+										{
+											"key": "algorithm",
+											"value": "HS256",
+											"type": "string"
+										},
+										{
+											"key": "addTokenTo",
+											"value": "header",
+											"type": "string"
+										},
+										{
+											"key": "headerPrefix",
+											"value": "Bearer",
+											"type": "string"
+										},
+										{
+											"key": "queryParamKey",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "header",
+											"value": "{}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7188/api/Products/ca97236c-ae13-4d03-0326-08dd0ee1291a",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7188",
+									"path": [
+										"api",
+										"Products",
+										"ca97236c-ae13-4d03-0326-08dd0ee1291a"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "export",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "jwt",
+									"jwt": [
+										{
+											"key": "payload",
+											"value": "{\r\n  \"unique_name\": \"supplier\",\r\n  \"UserType\": \"0\",\r\n  \"nbf\": 1732885703,\r\n  \"exp\": 1735477703,\r\n  \"iat\": 1732885703\r\n}",
+											"type": "string"
+										},
+										{
+											"key": "secret",
+											"value": "JWTAuthenticationHIGHsecuredPasswordVVVp1OH7Xzyr",
+											"type": "string"
+										},
+										{
+											"key": "isSecretBase64Encoded",
+											"value": false,
+											"type": "boolean"
+										},
+										{
+											"key": "algorithm",
+											"value": "HS256",
+											"type": "string"
+										},
+										{
+											"key": "addTokenTo",
+											"value": "header",
+											"type": "string"
+										},
+										{
+											"key": "headerPrefix",
+											"value": "Bearer",
+											"type": "string"
+										},
+										{
+											"key": "queryParamKey",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "header",
+											"value": "{}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7188/api/Products/export",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7188",
+									"path": [
+										"api",
+										"Products",
+										"export"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "addProduct",
+							"request": {
+								"auth": {
+									"type": "jwt",
+									"jwt": [
+										{
+											"key": "payload",
+											"value": "{\r\n  \"unique_name\": \"supplier\",\r\n  \"UserType\": \"0\",\r\n  \"nbf\": 1732885703,\r\n  \"exp\": 1735477703,\r\n  \"iat\": 1732885703\r\n}",
+											"type": "string"
+										},
+										{
+											"key": "secret",
+											"value": "JWTAuthenticationHIGHsecuredPasswordVVVp1OH7Xzyr",
+											"type": "string"
+										},
+										{
+											"key": "isSecretBase64Encoded",
+											"value": false,
+											"type": "boolean"
+										},
+										{
+											"key": "algorithm",
+											"value": "HS256",
+											"type": "string"
+										},
+										{
+											"key": "addTokenTo",
+											"value": "header",
+											"type": "string"
+										},
+										{
+											"key": "headerPrefix",
+											"value": "Bearer",
+											"type": "string"
+										},
+										{
+											"key": "queryParamKey",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "header",
+											"value": "{}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"name\": \"Lemon\",\r\n  \"quantity\": 150,\r\n  \"price\": 1.50\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7188/api/Products/",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7188",
+									"path": [
+										"api",
+										"Products",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "updateProduct",
+							"request": {
+								"auth": {
+									"type": "jwt",
+									"jwt": [
+										{
+											"key": "payload",
+											"value": "{\r\n  \"unique_name\": \"supplier\",\r\n  \"UserType\": \"0\",\r\n  \"nbf\": 1732885703,\r\n  \"exp\": 1735477703,\r\n  \"iat\": 1732885703\r\n}",
+											"type": "string"
+										},
+										{
+											"key": "secret",
+											"value": "JWTAuthenticationHIGHsecuredPasswordVVVp1OH7Xzyr",
+											"type": "string"
+										},
+										{
+											"key": "isSecretBase64Encoded",
+											"value": false,
+											"type": "boolean"
+										},
+										{
+											"key": "algorithm",
+											"value": "HS256",
+											"type": "string"
+										},
+										{
+											"key": "addTokenTo",
+											"value": "header",
+											"type": "string"
+										},
+										{
+											"key": "headerPrefix",
+											"value": "Bearer",
+											"type": "string"
+										},
+										{
+											"key": "queryParamKey",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "header",
+											"value": "{}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"id\": \"c7fe9084-bd35-481b-52c5-08dd1294533b\",\r\n  \"name\": \"Lemon\",\r\n  \"quantity\": 100,\r\n  \"price\": 0.57\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7188/api/Products/c7fe9084-bd35-481b-52c5-08dd1294533b",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7188",
+									"path": [
+										"api",
+										"Products",
+										"c7fe9084-bd35-481b-52c5-08dd1294533b"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "deleteProduct",
+							"request": {
+								"auth": {
+									"type": "jwt",
+									"jwt": [
+										{
+											"key": "payload",
+											"value": "{\r\n  \"unique_name\": \"supplier\",\r\n  \"UserType\": \"0\",\r\n  \"nbf\": 1732885703,\r\n  \"exp\": 1735477703,\r\n  \"iat\": 1732885703\r\n}",
+											"type": "string"
+										},
+										{
+											"key": "secret",
+											"value": "JWTAuthenticationHIGHsecuredPasswordVVVp1OH7Xzyr",
+											"type": "string"
+										},
+										{
+											"key": "isSecretBase64Encoded",
+											"value": false,
+											"type": "boolean"
+										},
+										{
+											"key": "algorithm",
+											"value": "HS256",
+											"type": "string"
+										},
+										{
+											"key": "addTokenTo",
+											"value": "header",
+											"type": "string"
+										},
+										{
+											"key": "headerPrefix",
+											"value": "Bearer",
+											"type": "string"
+										},
+										{
+											"key": "queryParamKey",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "header",
+											"value": "{}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7188/api/Products/fdac2a84-12ae-4ab3-52c6-08dd1294533b",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7188",
+									"path": [
+										"api",
+										"Products",
+										"fdac2a84-12ae-4ab3-52c6-08dd1294533b"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"auth": {
+						"type": "jwt",
+						"jwt": [
+							{
+								"key": "payload",
+								"value": "{\r\n  \"unique_name\": \"supplier\",\r\n  \"UserType\": \"0\",\r\n  \"nbf\": 1732454983,\r\n  \"exp\": 1732458583,\r\n  \"iat\": 1732454983\r\n}",
+								"type": "string"
+							},
+							{
+								"key": "secret",
+								"value": "JWTAuthenticationMAYBEHIGHsecuredPasswordVVVp1OH7Xzyr",
+								"type": "string"
+							},
+							{
+								"key": "algorithm",
+								"value": "HS256",
+								"type": "string"
+							},
+							{
+								"key": "isSecretBase64Encoded",
+								"value": false,
+								"type": "boolean"
+							},
+							{
+								"key": "addTokenTo",
+								"value": "header",
+								"type": "string"
+							},
+							{
+								"key": "headerPrefix",
+								"value": "Bearer",
+								"type": "string"
+							},
+							{
+								"key": "queryParamKey",
+								"value": "token",
+								"type": "string"
+							},
+							{
+								"key": "header",
+								"value": "{}",
+								"type": "string"
+							}
+						]
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"packages": {},
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"packages": {},
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Orders",
+			"item": [
+				{
+					"name": "admin",
+					"item": [
+						{
+							"name": "getAllOrders",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response has the required fields\", function () {",
+											"    const responseData = pm.response.json();",
+											"    ",
+											"    pm.expect(responseData).to.be.an('array');",
+											"    responseData.forEach(function(order) {",
+											"        pm.expect(order).to.have.property('id');",
+											"        pm.expect(order).to.have.property('orderDate');",
+											"        pm.expect(order).to.have.property('orderType');",
+											"        pm.expect(order).to.have.property('orderProducts');",
+											"        pm.expect(order).to.have.property('invoice');",
+											"    });",
+											"});",
+											"",
+											"",
+											"pm.test(\"Each orderProduct has required fields\", function () {",
+											"    const responseData = pm.response.json();",
+											"    ",
+											"    pm.expect(responseData).to.be.an('array');",
+											"    responseData.forEach(function(order) {",
+											"        pm.expect(order).to.be.an('object');",
+											"        pm.expect(order.id).to.exist;",
+											"        pm.expect(order.orderDate).to.exist;",
+											"        pm.expect(order.orderType).to.exist;",
+											"    });",
+											"});",
+											"",
+											"",
+											"pm.test(\"OrderDate is in a valid date format\", function () {",
+											"  const responseData = pm.response.json();",
+											"  ",
+											"  responseData.forEach(function(order) {",
+											"    pm.expect(order.orderDate).to.match(/^\\d{4}-\\d{2}-\\d{2}$/);",
+											"  });",
+											"});",
+											"",
+											"",
+											"pm.test(\"Response time is less than 200ms\", function () {",
+											"  pm.expect(pm.response.responseTime).to.be.below(200);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "jwt",
+									"jwt": [
+										{
+											"key": "payload",
+											"value": "{\r\n  \"unique_name\": \"admin\",\r\n  \"UserType\": \"1\",\r\n  \"nbf\": 1732704891,\r\n  \"exp\": 1735296891,\r\n  \"iat\": 1732704891\r\n}",
+											"type": "string"
+										},
+										{
+											"key": "secret",
+											"value": "JWTAuthenticationHIGHsecuredPasswordVVVp1OH7Xzyr",
+											"type": "string"
+										},
+										{
+											"key": "algorithm",
+											"value": "HS256",
+											"type": "string"
+										},
+										{
+											"key": "isSecretBase64Encoded",
+											"value": false,
+											"type": "boolean"
+										},
+										{
+											"key": "addTokenTo",
+											"value": "header",
+											"type": "string"
+										},
+										{
+											"key": "headerPrefix",
+											"value": "Bearer",
+											"type": "string"
+										},
+										{
+											"key": "queryParamKey",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "header",
+											"value": "{}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7188/api/Orders",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7188",
+									"path": [
+										"api",
+										"Orders"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getOrderById",
+							"request": {
+								"auth": {
+									"type": "jwt",
+									"jwt": [
+										{
+											"key": "payload",
+											"value": "{\r\n  \"unique_name\": \"admin\",\r\n  \"UserType\": \"1\",\r\n  \"nbf\": 1732704891,\r\n  \"exp\": 1735296891,\r\n  \"iat\": 1732704891\r\n}",
+											"type": "string"
+										},
+										{
+											"key": "secret",
+											"value": "JWTAuthenticationHIGHsecuredPasswordVVVp1OH7Xzyr",
+											"type": "string"
+										},
+										{
+											"key": "algorithm",
+											"value": "HS256",
+											"type": "string"
+										},
+										{
+											"key": "isSecretBase64Encoded",
+											"value": false,
+											"type": "boolean"
+										},
+										{
+											"key": "addTokenTo",
+											"value": "header",
+											"type": "string"
+										},
+										{
+											"key": "headerPrefix",
+											"value": "Bearer",
+											"type": "string"
+										},
+										{
+											"key": "queryParamKey",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "header",
+											"value": "{}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7188/api/Orders/123e290b-0c59-48d9-92aa-2d348961928e",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7188",
+									"path": [
+										"api",
+										"Orders",
+										"123e290b-0c59-48d9-92aa-2d348961928e"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "addOrder",
+							"request": {
+								"auth": {
+									"type": "jwt",
+									"jwt": [
+										{
+											"key": "payload",
+											"value": "{\r\n  \"unique_name\": \"admin\",\r\n  \"UserType\": \"1\",\r\n  \"nbf\": 1732704891,\r\n  \"exp\": 1735296891,\r\n  \"iat\": 1732704891\r\n}",
+											"type": "string"
+										},
+										{
+											"key": "secret",
+											"value": "JWTAuthenticationHIGHsecuredPasswordVVVp1OH7Xzyr",
+											"type": "string"
+										},
+										{
+											"key": "algorithm",
+											"value": "HS256",
+											"type": "string"
+										},
+										{
+											"key": "isSecretBase64Encoded",
+											"value": false,
+											"type": "boolean"
+										},
+										{
+											"key": "addTokenTo",
+											"value": "header",
+											"type": "string"
+										},
+										{
+											"key": "headerPrefix",
+											"value": "Bearer",
+											"type": "string"
+										},
+										{
+											"key": "queryParamKey",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "header",
+											"value": "{}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"orderDate\":\"2024-08-03\",\r\n  \"orderType\": \"Out\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7188/api/Orders",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7188",
+									"path": [
+										"api",
+										"Orders"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "updateOrder",
+							"request": {
+								"auth": {
+									"type": "jwt",
+									"jwt": [
+										{
+											"key": "payload",
+											"value": "{\r\n  \"unique_name\": \"admin\",\r\n  \"UserType\": \"1\",\r\n  \"nbf\": 1732704891,\r\n  \"exp\": 1735296891,\r\n  \"iat\": 1732704891\r\n}",
+											"type": "string"
+										},
+										{
+											"key": "secret",
+											"value": "JWTAuthenticationHIGHsecuredPasswordVVVp1OH7Xzyr",
+											"type": "string"
+										},
+										{
+											"key": "algorithm",
+											"value": "HS256",
+											"type": "string"
+										},
+										{
+											"key": "isSecretBase64Encoded",
+											"value": false,
+											"type": "boolean"
+										},
+										{
+											"key": "addTokenTo",
+											"value": "header",
+											"type": "string"
+										},
+										{
+											"key": "headerPrefix",
+											"value": "Bearer",
+											"type": "string"
+										},
+										{
+											"key": "queryParamKey",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "header",
+											"value": "{}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"id\": \"562d1b8f-1b03-4257-ad21-08dd12e1edf0\",\r\n  \"orderDate\": \"2024-11-01\",\r\n  \"orderType\": \"In\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7188/api/Orders/562d1b8f-1b03-4257-ad21-08dd12e1edf0",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7188",
+									"path": [
+										"api",
+										"Orders",
+										"562d1b8f-1b03-4257-ad21-08dd12e1edf0"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "deleteOrder",
+							"request": {
+								"auth": {
+									"type": "jwt",
+									"jwt": [
+										{
+											"key": "payload",
+											"value": "{\r\n  \"unique_name\": \"admin\",\r\n  \"UserType\": \"1\",\r\n  \"nbf\": 1732704891,\r\n  \"exp\": 1735296891,\r\n  \"iat\": 1732704891\r\n}",
+											"type": "string"
+										},
+										{
+											"key": "secret",
+											"value": "JWTAuthenticationHIGHsecuredPasswordVVVp1OH7Xzyr",
+											"type": "string"
+										},
+										{
+											"key": "algorithm",
+											"value": "HS256",
+											"type": "string"
+										},
+										{
+											"key": "isSecretBase64Encoded",
+											"value": false,
+											"type": "boolean"
+										},
+										{
+											"key": "addTokenTo",
+											"value": "header",
+											"type": "string"
+										},
+										{
+											"key": "headerPrefix",
+											"value": "Bearer",
+											"type": "string"
+										},
+										{
+											"key": "queryParamKey",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "header",
+											"value": "{}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7188/api/Orders/0fc400b5-b34a-4f52-1413-08dd13f68266\n",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7188",
+									"path": [
+										"api",
+										"Orders",
+										"0fc400b5-b34a-4f52-1413-08dd13f68266\n"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"auth": {
+						"type": "jwt",
+						"jwt": [
+							{
+								"key": "secret",
+								"value": "JWTAuthenticationMAYBEHIGHsecuredPasswordVVVp1OH7Xzyr",
+								"type": "string"
+							},
+							{
+								"key": "payload",
+								"value": "{\r\n  \"unique_name\": \"admin\",\r\n  \"UserType\": \"1\",\r\n  \"nbf\": 1732454983,\r\n  \"exp\": 1732458583,\r\n  \"iat\": 1732454983\r\n}",
+								"type": "string"
+							},
+							{
+								"key": "algorithm",
+								"value": "HS256",
+								"type": "string"
+							},
+							{
+								"key": "isSecretBase64Encoded",
+								"value": false,
+								"type": "boolean"
+							},
+							{
+								"key": "addTokenTo",
+								"value": "header",
+								"type": "string"
+							},
+							{
+								"key": "headerPrefix",
+								"value": "Bearer",
+								"type": "string"
+							},
+							{
+								"key": "queryParamKey",
+								"value": "token",
+								"type": "string"
+							},
+							{
+								"key": "header",
+								"value": "{}",
+								"type": "string"
+							}
+						]
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"packages": {},
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"packages": {},
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "supplier",
+					"item": [
+						{
+							"name": "getAllOrders",
+							"request": {
+								"auth": {
+									"type": "jwt",
+									"jwt": [
+										{
+											"key": "payload",
+											"value": "{\r\n  \"unique_name\": \"admin\",\r\n  \"UserType\": \"1\",\r\n  \"nbf\": 1732704891,\r\n  \"exp\": 1735296891,\r\n  \"iat\": 1732704891\r\n}",
+											"type": "string"
+										},
+										{
+											"key": "secret",
+											"value": "JWTAuthenticationHIGHsecuredPasswordVVVp1OH7Xzyr",
+											"type": "string"
+										},
+										{
+											"key": "algorithm",
+											"value": "HS256",
+											"type": "string"
+										},
+										{
+											"key": "isSecretBase64Encoded",
+											"value": false,
+											"type": "boolean"
+										},
+										{
+											"key": "addTokenTo",
+											"value": "header",
+											"type": "string"
+										},
+										{
+											"key": "headerPrefix",
+											"value": "Bearer",
+											"type": "string"
+										},
+										{
+											"key": "queryParamKey",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "header",
+											"value": "{}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7188/api/Orders",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7188",
+									"path": [
+										"api",
+										"Orders"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getOrderById",
+							"request": {
+								"auth": {
+									"type": "jwt",
+									"jwt": [
+										{
+											"key": "payload",
+											"value": "{\r\n  \"unique_name\": \"admin\",\r\n  \"UserType\": \"1\",\r\n  \"nbf\": 1732704891,\r\n  \"exp\": 1735296891,\r\n  \"iat\": 1732704891\r\n}",
+											"type": "string"
+										},
+										{
+											"key": "secret",
+											"value": "JWTAuthenticationHIGHsecuredPasswordVVVp1OH7Xzyr",
+											"type": "string"
+										},
+										{
+											"key": "algorithm",
+											"value": "HS256",
+											"type": "string"
+										},
+										{
+											"key": "isSecretBase64Encoded",
+											"value": false,
+											"type": "boolean"
+										},
+										{
+											"key": "addTokenTo",
+											"value": "header",
+											"type": "string"
+										},
+										{
+											"key": "headerPrefix",
+											"value": "Bearer",
+											"type": "string"
+										},
+										{
+											"key": "queryParamKey",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "header",
+											"value": "{}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7188/api/Orders/b020b0e1-cdff-47a0-9c83-37437a870d91",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7188",
+									"path": [
+										"api",
+										"Orders",
+										"b020b0e1-cdff-47a0-9c83-37437a870d91"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "addOrder",
+							"request": {
+								"auth": {
+									"type": "jwt",
+									"jwt": [
+										{
+											"key": "payload",
+											"value": "{\r\n  \"unique_name\": \"admin\",\r\n  \"UserType\": \"1\",\r\n  \"nbf\": 1732704891,\r\n  \"exp\": 1735296891,\r\n  \"iat\": 1732704891\r\n}",
+											"type": "string"
+										},
+										{
+											"key": "secret",
+											"value": "JWTAuthenticationHIGHsecuredPasswordVVVp1OH7Xzyr",
+											"type": "string"
+										},
+										{
+											"key": "algorithm",
+											"value": "HS256",
+											"type": "string"
+										},
+										{
+											"key": "isSecretBase64Encoded",
+											"value": false,
+											"type": "boolean"
+										},
+										{
+											"key": "addTokenTo",
+											"value": "header",
+											"type": "string"
+										},
+										{
+											"key": "headerPrefix",
+											"value": "Bearer",
+											"type": "string"
+										},
+										{
+											"key": "queryParamKey",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "header",
+											"value": "{}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"orderDate\": \"2024-11-07\",\r\n  \"orderType\": \"Out\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7188/api/Orders",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7188",
+									"path": [
+										"api",
+										"Orders"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "updateOrder",
+							"request": {
+								"auth": {
+									"type": "jwt",
+									"jwt": [
+										{
+											"key": "payload",
+											"value": "{\r\n  \"unique_name\": \"admin\",\r\n  \"UserType\": \"1\",\r\n  \"nbf\": 1732704891,\r\n  \"exp\": 1735296891,\r\n  \"iat\": 1732704891\r\n}",
+											"type": "string"
+										},
+										{
+											"key": "secret",
+											"value": "JWTAuthenticationHIGHsecuredPasswordVVVp1OH7Xzyr",
+											"type": "string"
+										},
+										{
+											"key": "algorithm",
+											"value": "HS256",
+											"type": "string"
+										},
+										{
+											"key": "isSecretBase64Encoded",
+											"value": false,
+											"type": "boolean"
+										},
+										{
+											"key": "addTokenTo",
+											"value": "header",
+											"type": "string"
+										},
+										{
+											"key": "headerPrefix",
+											"value": "Bearer",
+											"type": "string"
+										},
+										{
+											"key": "queryParamKey",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "header",
+											"value": "{}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"id\": \"cf509b36-41e2-4535-1414-08dd13f68266\",\r\n  \"orderDate\": \"2024-09-20\",\r\n  \"orderType\": \"Out\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7188/api/Orders/cf509b36-41e2-4535-1414-08dd13f68266",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7188",
+									"path": [
+										"api",
+										"Orders",
+										"cf509b36-41e2-4535-1414-08dd13f68266"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "deleteOrder",
+							"request": {
+								"auth": {
+									"type": "jwt",
+									"jwt": [
+										{
+											"key": "payload",
+											"value": "{\r\n  \"unique_name\": \"admin\",\r\n  \"UserType\": \"1\",\r\n  \"nbf\": 1732704891,\r\n  \"exp\": 1735296891,\r\n  \"iat\": 1732704891\r\n}",
+											"type": "string"
+										},
+										{
+											"key": "secret",
+											"value": "JWTAuthenticationHIGHsecuredPasswordVVVp1OH7Xzyr",
+											"type": "string"
+										},
+										{
+											"key": "algorithm",
+											"value": "HS256",
+											"type": "string"
+										},
+										{
+											"key": "isSecretBase64Encoded",
+											"value": false,
+											"type": "boolean"
+										},
+										{
+											"key": "addTokenTo",
+											"value": "header",
+											"type": "string"
+										},
+										{
+											"key": "headerPrefix",
+											"value": "Bearer",
+											"type": "string"
+										},
+										{
+											"key": "queryParamKey",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "header",
+											"value": "{}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7188/api/Orders/3dad2372-0577-427d-1415-08dd13f68266",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7188",
+									"path": [
+										"api",
+										"Orders",
+										"3dad2372-0577-427d-1415-08dd13f68266"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"auth": {
+						"type": "jwt",
+						"jwt": [
+							{
+								"key": "secret",
+								"value": "JWTAuthenticationMAYBEHIGHsecuredPasswordVVVp1OH7Xzyr",
+								"type": "string"
+							},
+							{
+								"key": "payload",
+								"value": "{\r\n  \"unique_name\": \"admin\",\r\n  \"UserType\": \"1\",\r\n  \"nbf\": 1732454983,\r\n  \"exp\": 1732458583,\r\n  \"iat\": 1732454983\r\n}",
+								"type": "string"
+							},
+							{
+								"key": "algorithm",
+								"value": "HS256",
+								"type": "string"
+							},
+							{
+								"key": "isSecretBase64Encoded",
+								"value": false,
+								"type": "boolean"
+							},
+							{
+								"key": "addTokenTo",
+								"value": "header",
+								"type": "string"
+							},
+							{
+								"key": "headerPrefix",
+								"value": "Bearer",
+								"type": "string"
+							},
+							{
+								"key": "queryParamKey",
+								"value": "token",
+								"type": "string"
+							},
+							{
+								"key": "header",
+								"value": "{}",
+								"type": "string"
+							}
+						]
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"packages": {},
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"packages": {},
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "OrderProducts",
+			"item": [
+				{
+					"name": "admin",
+					"item": [
+						{
+							"name": "getOrderProducts",
+							"request": {
+								"auth": {
+									"type": "jwt",
+									"jwt": [
+										{
+											"key": "payload",
+											"value": "{\r\n  \"unique_name\": \"admin\",\r\n  \"UserType\": \"1\",\r\n  \"nbf\": 1732704891,\r\n  \"exp\": 1735296891,\r\n  \"iat\": 1732704891\r\n}",
+											"type": "string"
+										},
+										{
+											"key": "secret",
+											"value": "JWTAuthenticationHIGHsecuredPasswordVVVp1OH7Xzyr",
+											"type": "string"
+										},
+										{
+											"key": "isSecretBase64Encoded",
+											"value": false,
+											"type": "boolean"
+										},
+										{
+											"key": "algorithm",
+											"value": "HS256",
+											"type": "string"
+										},
+										{
+											"key": "addTokenTo",
+											"value": "header",
+											"type": "string"
+										},
+										{
+											"key": "headerPrefix",
+											"value": "Bearer",
+											"type": "string"
+										},
+										{
+											"key": "queryParamKey",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "header",
+											"value": "{}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7188/api/OrderProducts",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7188",
+									"path": [
+										"api",
+										"OrderProducts"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getOrderProductByOrderID",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "jwt",
+									"jwt": [
+										{
+											"key": "payload",
+											"value": "{\r\n  \"unique_name\": \"admin\",\r\n  \"UserType\": \"1\",\r\n  \"nbf\": 1732704891,\r\n  \"exp\": 1735296891,\r\n  \"iat\": 1732704891\r\n}",
+											"type": "string"
+										},
+										{
+											"key": "secret",
+											"value": "JWTAuthenticationHIGHsecuredPasswordVVVp1OH7Xzyr",
+											"type": "string"
+										},
+										{
+											"key": "isSecretBase64Encoded",
+											"value": false,
+											"type": "boolean"
+										},
+										{
+											"key": "algorithm",
+											"value": "HS256",
+											"type": "string"
+										},
+										{
+											"key": "addTokenTo",
+											"value": "header",
+											"type": "string"
+										},
+										{
+											"key": "headerPrefix",
+											"value": "Bearer",
+											"type": "string"
+										},
+										{
+											"key": "queryParamKey",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "header",
+											"value": "{}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7188/api/OrderProducts/o/123e290b-0c59-48d9-92aa-2d348961928e",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7188",
+									"path": [
+										"api",
+										"OrderProducts",
+										"o",
+										"123e290b-0c59-48d9-92aa-2d348961928e"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getOrderProductByProductID",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "jwt",
+									"jwt": [
+										{
+											"key": "payload",
+											"value": "{\r\n  \"unique_name\": \"admin\",\r\n  \"UserType\": \"1\",\r\n  \"nbf\": 1732704891,\r\n  \"exp\": 1735296891,\r\n  \"iat\": 1732704891\r\n}",
+											"type": "string"
+										},
+										{
+											"key": "secret",
+											"value": "JWTAuthenticationHIGHsecuredPasswordVVVp1OH7Xzyr",
+											"type": "string"
+										},
+										{
+											"key": "isSecretBase64Encoded",
+											"value": false,
+											"type": "boolean"
+										},
+										{
+											"key": "algorithm",
+											"value": "HS256",
+											"type": "string"
+										},
+										{
+											"key": "addTokenTo",
+											"value": "header",
+											"type": "string"
+										},
+										{
+											"key": "headerPrefix",
+											"value": "Bearer",
+											"type": "string"
+										},
+										{
+											"key": "queryParamKey",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "header",
+											"value": "{}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7188/api/OrderProducts/p/ce877c4d-6c14-46e2-a86f-e616755bde4f",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7188",
+									"path": [
+										"api",
+										"OrderProducts",
+										"p",
+										"ce877c4d-6c14-46e2-a86f-e616755bde4f"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "addOrderProducts",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 500\", function () {\r",
+											"    pm.response.to.have.status(500);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "jwt",
+									"jwt": [
+										{
+											"key": "payload",
+											"value": "{\r\n  \"unique_name\": \"admin\",\r\n  \"UserType\": \"1\",\r\n  \"nbf\": 1732704891,\r\n  \"exp\": 1735296891,\r\n  \"iat\": 1732704891\r\n}",
+											"type": "string"
+										},
+										{
+											"key": "secret",
+											"value": "JWTAuthenticationHIGHsecuredPasswordVVVp1OH7Xzyr",
+											"type": "string"
+										},
+										{
+											"key": "isSecretBase64Encoded",
+											"value": false,
+											"type": "boolean"
+										},
+										{
+											"key": "algorithm",
+											"value": "HS256",
+											"type": "string"
+										},
+										{
+											"key": "addTokenTo",
+											"value": "header",
+											"type": "string"
+										},
+										{
+											"key": "headerPrefix",
+											"value": "Bearer",
+											"type": "string"
+										},
+										{
+											"key": "queryParamKey",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "header",
+											"value": "{}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"orderId\": \"cf509b36-41e2-4535-1414-08dd13f68266\",\r\n  \"productId\": \"fffdfccf-dcc6-403d-d52e-08dd0ecde9d3\",\r\n  \"quantity\": 10,\r\n  \"price\": 18.80\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7188/api/OrderProducts",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7188",
+									"path": [
+										"api",
+										"OrderProducts"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "updateOrderProductById",
+							"request": {
+								"auth": {
+									"type": "jwt",
+									"jwt": [
+										{
+											"key": "payload",
+											"value": "{\r\n  \"unique_name\": \"admin\",\r\n  \"UserType\": \"1\",\r\n  \"nbf\": 1732704891,\r\n  \"exp\": 1735296891,\r\n  \"iat\": 1732704891\r\n}",
+											"type": "string"
+										},
+										{
+											"key": "secret",
+											"value": "JWTAuthenticationHIGHsecuredPasswordVVVp1OH7Xzyr",
+											"type": "string"
+										},
+										{
+											"key": "algorithm",
+											"value": "HS256",
+											"type": "string"
+										},
+										{
+											"key": "isSecretBase64Encoded",
+											"value": false,
+											"type": "boolean"
+										},
+										{
+											"key": "addTokenTo",
+											"value": "header",
+											"type": "string"
+										},
+										{
+											"key": "headerPrefix",
+											"value": "Bearer",
+											"type": "string"
+										},
+										{
+											"key": "queryParamKey",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "header",
+											"value": "{}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"orderId\": \"123e290b-0c59-48d9-92aa-2d348961928e\",\r\n  \"productId\": \"6692cd7d-c1c7-4946-8670-f59336d1f2cc\",\r\n  \"quantity\": 70,\r\n  \"price\": 57.60\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7188/api/OrderProducts/123e290b-0c59-48d9-92aa-2d348961928e",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7188",
+									"path": [
+										"api",
+										"OrderProducts",
+										"123e290b-0c59-48d9-92aa-2d348961928e"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "deleteOrderProductById",
+							"request": {
+								"auth": {
+									"type": "jwt",
+									"jwt": [
+										{
+											"key": "payload",
+											"value": "{\r\n  \"unique_name\": \"admin\",\r\n  \"UserType\": \"1\",\r\n  \"nbf\": 1732704891,\r\n  \"exp\": 1735296891,\r\n  \"iat\": 1732704891\r\n}",
+											"type": "string"
+										},
+										{
+											"key": "secret",
+											"value": "JWTAuthenticationHIGHsecuredPasswordVVVp1OH7Xzyr",
+											"type": "string"
+										},
+										{
+											"key": "algorithm",
+											"value": "HS256",
+											"type": "string"
+										},
+										{
+											"key": "isSecretBase64Encoded",
+											"value": false,
+											"type": "boolean"
+										},
+										{
+											"key": "addTokenTo",
+											"value": "header",
+											"type": "string"
+										},
+										{
+											"key": "headerPrefix",
+											"value": "Bearer",
+											"type": "string"
+										},
+										{
+											"key": "queryParamKey",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "header",
+											"value": "{}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7188/api/OrderProducts/o/123e290b-0c59-48d9-92aa-2d348961928e, p/ca97236c-ae13-4d03-0326-08dd0ee1291a",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7188",
+									"path": [
+										"api",
+										"OrderProducts",
+										"o",
+										"123e290b-0c59-48d9-92aa-2d348961928e, p",
+										"ca97236c-ae13-4d03-0326-08dd0ee1291a"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"auth": {
+						"type": "jwt",
+						"jwt": [
+							{
+								"key": "secret",
+								"value": "JWTAuthenticationMAYBEHIGHsecuredPasswordVVVp1OH7Xzyr",
+								"type": "string"
+							},
+							{
+								"key": "payload",
+								"value": "{\r\n  \"unique_name\": \"admin\",\r\n  \"UserType\": \"1\",\r\n  \"nbf\": 1732454983,\r\n  \"exp\": 1732458583,\r\n  \"iat\": 1732454983\r\n}",
+								"type": "string"
+							},
+							{
+								"key": "algorithm",
+								"value": "HS256",
+								"type": "string"
+							},
+							{
+								"key": "isSecretBase64Encoded",
+								"value": false,
+								"type": "boolean"
+							},
+							{
+								"key": "addTokenTo",
+								"value": "header",
+								"type": "string"
+							},
+							{
+								"key": "headerPrefix",
+								"value": "Bearer",
+								"type": "string"
+							},
+							{
+								"key": "queryParamKey",
+								"value": "token",
+								"type": "string"
+							},
+							{
+								"key": "header",
+								"value": "{}",
+								"type": "string"
+							}
+						]
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"packages": {},
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"packages": {},
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "supplier",
+					"item": [
+						{
+							"name": "getOrderProducts",
+							"request": {
+								"auth": {
+									"type": "jwt",
+									"jwt": [
+										{
+											"key": "payload",
+											"value": "{\r\n  \"unique_name\": \"admin\",\r\n  \"UserType\": \"1\",\r\n  \"nbf\": 1732704891,\r\n  \"exp\": 1735296891,\r\n  \"iat\": 1732704891\r\n}",
+											"type": "string"
+										},
+										{
+											"key": "secret",
+											"value": "JWTAuthenticationHIGHsecuredPasswordVVVp1OH7Xzyr",
+											"type": "string"
+										},
+										{
+											"key": "isSecretBase64Encoded",
+											"value": false,
+											"type": "boolean"
+										},
+										{
+											"key": "algorithm",
+											"value": "HS256",
+											"type": "string"
+										},
+										{
+											"key": "addTokenTo",
+											"value": "header",
+											"type": "string"
+										},
+										{
+											"key": "headerPrefix",
+											"value": "Bearer",
+											"type": "string"
+										},
+										{
+											"key": "queryParamKey",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "header",
+											"value": "{}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7188/api/OrderProducts",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7188",
+									"path": [
+										"api",
+										"OrderProducts"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getOrderProductByOrderID",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "jwt",
+									"jwt": [
+										{
+											"key": "payload",
+											"value": "{\r\n  \"unique_name\": \"admin\",\r\n  \"UserType\": \"1\",\r\n  \"nbf\": 1732704891,\r\n  \"exp\": 1735296891,\r\n  \"iat\": 1732704891\r\n}",
+											"type": "string"
+										},
+										{
+											"key": "secret",
+											"value": "JWTAuthenticationHIGHsecuredPasswordVVVp1OH7Xzyr",
+											"type": "string"
+										},
+										{
+											"key": "isSecretBase64Encoded",
+											"value": false,
+											"type": "boolean"
+										},
+										{
+											"key": "algorithm",
+											"value": "HS256",
+											"type": "string"
+										},
+										{
+											"key": "addTokenTo",
+											"value": "header",
+											"type": "string"
+										},
+										{
+											"key": "headerPrefix",
+											"value": "Bearer",
+											"type": "string"
+										},
+										{
+											"key": "queryParamKey",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "header",
+											"value": "{}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7188/api/OrderProducts/o/b020b0e1-cdff-47a0-9c83-37437a870d91",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7188",
+									"path": [
+										"api",
+										"OrderProducts",
+										"o",
+										"b020b0e1-cdff-47a0-9c83-37437a870d91"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getOrderProductByProductID",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "jwt",
+									"jwt": [
+										{
+											"key": "payload",
+											"value": "{\r\n  \"unique_name\": \"admin\",\r\n  \"UserType\": \"1\",\r\n  \"nbf\": 1732704891,\r\n  \"exp\": 1735296891,\r\n  \"iat\": 1732704891\r\n}",
+											"type": "string"
+										},
+										{
+											"key": "secret",
+											"value": "JWTAuthenticationHIGHsecuredPasswordVVVp1OH7Xzyr",
+											"type": "string"
+										},
+										{
+											"key": "isSecretBase64Encoded",
+											"value": false,
+											"type": "boolean"
+										},
+										{
+											"key": "algorithm",
+											"value": "HS256",
+											"type": "string"
+										},
+										{
+											"key": "addTokenTo",
+											"value": "header",
+											"type": "string"
+										},
+										{
+											"key": "headerPrefix",
+											"value": "Bearer",
+											"type": "string"
+										},
+										{
+											"key": "queryParamKey",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "header",
+											"value": "{}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7188/api/OrderProducts/p/6692cd7d-c1c7-4946-8670-f59336d1f2cc",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7188",
+									"path": [
+										"api",
+										"OrderProducts",
+										"p",
+										"6692cd7d-c1c7-4946-8670-f59336d1f2cc"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "addOrderProducts",
+							"request": {
+								"auth": {
+									"type": "jwt",
+									"jwt": [
+										{
+											"key": "payload",
+											"value": "{\r\n  \"unique_name\": \"admin\",\r\n  \"UserType\": \"1\",\r\n  \"nbf\": 1732704891,\r\n  \"exp\": 1735296891,\r\n  \"iat\": 1732704891\r\n}",
+											"type": "string"
+										},
+										{
+											"key": "secret",
+											"value": "JWTAuthenticationHIGHsecuredPasswordVVVp1OH7Xzyr",
+											"type": "string"
+										},
+										{
+											"key": "isSecretBase64Encoded",
+											"value": false,
+											"type": "boolean"
+										},
+										{
+											"key": "algorithm",
+											"value": "HS256",
+											"type": "string"
+										},
+										{
+											"key": "addTokenTo",
+											"value": "header",
+											"type": "string"
+										},
+										{
+											"key": "headerPrefix",
+											"value": "Bearer",
+											"type": "string"
+										},
+										{
+											"key": "queryParamKey",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "header",
+											"value": "{}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"orderId\": \"cf509b36-41e2-4535-1414-08dd13f68266\",\r\n  \"productId\": \"17dd61f5-f1f1-4080-d52f-08dd0ecde9d3\",\r\n  \"quantity\": 33,\r\n  \"price\": 45.70\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7188/api/OrderProducts",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7188",
+									"path": [
+										"api",
+										"OrderProducts"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "updateOrderProductById",
+							"request": {
+								"auth": {
+									"type": "jwt",
+									"jwt": [
+										{
+											"key": "payload",
+											"value": "{\r\n  \"unique_name\": \"admin\",\r\n  \"UserType\": \"1\",\r\n  \"nbf\": 1732704891,\r\n  \"exp\": 1735296891,\r\n  \"iat\": 1732704891\r\n}",
+											"type": "string"
+										},
+										{
+											"key": "secret",
+											"value": "JWTAuthenticationHIGHsecuredPasswordVVVp1OH7Xzyr",
+											"type": "string"
+										},
+										{
+											"key": "algorithm",
+											"value": "HS256",
+											"type": "string"
+										},
+										{
+											"key": "isSecretBase64Encoded",
+											"value": false,
+											"type": "boolean"
+										},
+										{
+											"key": "addTokenTo",
+											"value": "header",
+											"type": "string"
+										},
+										{
+											"key": "headerPrefix",
+											"value": "Bearer",
+											"type": "string"
+										},
+										{
+											"key": "queryParamKey",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "header",
+											"value": "{}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"orderId\": \"123e290b-0c59-48d9-92aa-2d348961928e\",\r\n  \"productId\": \"8274e42e-01d5-43af-d3e5-08dd0ecbc593\",\r\n  \"quantity\": 56,\r\n  \"price\": 101.50\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7188/api/OrderProducts/123e290b-0c59-48d9-92aa-2d348961928e",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7188",
+									"path": [
+										"api",
+										"OrderProducts",
+										"123e290b-0c59-48d9-92aa-2d348961928e"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "deleteOrderProductById",
+							"request": {
+								"auth": {
+									"type": "jwt",
+									"jwt": [
+										{
+											"key": "payload",
+											"value": "{\r\n  \"unique_name\": \"admin\",\r\n  \"UserType\": \"1\",\r\n  \"nbf\": 1732704891,\r\n  \"exp\": 1735296891,\r\n  \"iat\": 1732704891\r\n}",
+											"type": "string"
+										},
+										{
+											"key": "secret",
+											"value": "JWTAuthenticationHIGHsecuredPasswordVVVp1OH7Xzyr",
+											"type": "string"
+										},
+										{
+											"key": "algorithm",
+											"value": "HS256",
+											"type": "string"
+										},
+										{
+											"key": "isSecretBase64Encoded",
+											"value": false,
+											"type": "boolean"
+										},
+										{
+											"key": "addTokenTo",
+											"value": "header",
+											"type": "string"
+										},
+										{
+											"key": "headerPrefix",
+											"value": "Bearer",
+											"type": "string"
+										},
+										{
+											"key": "queryParamKey",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "header",
+											"value": "{}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7188/api/OrderProducts/o/123e290b-0c59-48d9-92aa-2d348961928e, p/fffdfccf-dcc6-403d-d52e-08dd0ecde9d3",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7188",
+									"path": [
+										"api",
+										"OrderProducts",
+										"o",
+										"123e290b-0c59-48d9-92aa-2d348961928e, p",
+										"fffdfccf-dcc6-403d-d52e-08dd0ecde9d3"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"auth": {
+						"type": "jwt",
+						"jwt": [
+							{
+								"key": "secret",
+								"value": "JWTAuthenticationMAYBEHIGHsecuredPasswordVVVp1OH7Xzyr",
+								"type": "string"
+							},
+							{
+								"key": "payload",
+								"value": "{\r\n  \"unique_name\": \"admin\",\r\n  \"UserType\": \"1\",\r\n  \"nbf\": 1732454983,\r\n  \"exp\": 1732458583,\r\n  \"iat\": 1732454983\r\n}",
+								"type": "string"
+							},
+							{
+								"key": "algorithm",
+								"value": "HS256",
+								"type": "string"
+							},
+							{
+								"key": "isSecretBase64Encoded",
+								"value": false,
+								"type": "boolean"
+							},
+							{
+								"key": "addTokenTo",
+								"value": "header",
+								"type": "string"
+							},
+							{
+								"key": "headerPrefix",
+								"value": "Bearer",
+								"type": "string"
+							},
+							{
+								"key": "queryParamKey",
+								"value": "token",
+								"type": "string"
+							},
+							{
+								"key": "header",
+								"value": "{}",
+								"type": "string"
+							}
+						]
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"packages": {},
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"packages": {},
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Invoices",
+			"item": [
+				{
+					"name": "getAllInvoices",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.expect(pm.response.code).to.equal(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "jwt",
+							"jwt": [
+								{
+									"key": "secret",
+									"value": "JWTAuthenticationHIGHsecuredPasswordVVVp1OH7Xzyr",
+									"type": "string"
+								},
+								{
+									"key": "payload",
+									"value": "{\r\n  \"unique_name\": \"admin\",\r\n  \"UserType\": \"1\",\r\n  \"nbf\": 1732882239,\r\n  \"exp\": 1735474239,\r\n  \"iat\": 1732882239\r\n}",
+									"type": "string"
+								},
+								{
+									"key": "isSecretBase64Encoded",
+									"value": false,
+									"type": "boolean"
+								},
+								{
+									"key": "algorithm",
+									"value": "HS256",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "headerPrefix",
+									"value": "Bearer",
+									"type": "string"
+								},
+								{
+									"key": "queryParamKey",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "header",
+									"value": "{}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7188/api/Invoices/",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7188",
+							"path": [
+								"api",
+								"Invoices",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getInvoiceByID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.expect(pm.response.code).to.equal(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "jwt",
+							"jwt": [
+								{
+									"key": "secret",
+									"value": "JWTAuthenticationHIGHsecuredPasswordVVVp1OH7Xzyr",
+									"type": "string"
+								},
+								{
+									"key": "payload",
+									"value": "{\r\n  \"unique_name\": \"admin\",\r\n  \"UserType\": \"1\",\r\n  \"nbf\": 1732882239,\r\n  \"exp\": 1735474239,\r\n  \"iat\": 1732882239\r\n}",
+									"type": "string"
+								},
+								{
+									"key": "isSecretBase64Encoded",
+									"value": false,
+									"type": "boolean"
+								},
+								{
+									"key": "algorithm",
+									"value": "HS256",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "headerPrefix",
+									"value": "Bearer",
+									"type": "string"
+								},
+								{
+									"key": "queryParamKey",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "header",
+									"value": "{}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7188/api/Invoices/f99ffff3-4990-46ff-976d-87a77f93cb8b",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7188",
+							"path": [
+								"api",
+								"Invoices",
+								"f99ffff3-4990-46ff-976d-87a77f93cb8b"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "exportInvoice",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.expect(pm.response.code).to.equal(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "jwt",
+							"jwt": [
+								{
+									"key": "secret",
+									"value": "JWTAuthenticationHIGHsecuredPasswordVVVp1OH7Xzyr",
+									"type": "string"
+								},
+								{
+									"key": "payload",
+									"value": "{\r\n  \"unique_name\": \"admin\",\r\n  \"UserType\": \"1\",\r\n  \"nbf\": 1732882239,\r\n  \"exp\": 1735474239,\r\n  \"iat\": 1732882239\r\n}",
+									"type": "string"
+								},
+								{
+									"key": "isSecretBase64Encoded",
+									"value": false,
+									"type": "boolean"
+								},
+								{
+									"key": "algorithm",
+									"value": "HS256",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "headerPrefix",
+									"value": "Bearer",
+									"type": "string"
+								},
+								{
+									"key": "queryParamKey",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "header",
+									"value": "{}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7188/api/Invoices/export-invoice?invoiceId=f99ffff3-4990-46ff-976d-87a77f93cb8b",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7188",
+							"path": [
+								"api",
+								"Invoices",
+								"export-invoice"
+							],
+							"query": [
+								{
+									"key": "invoiceId",
+									"value": "f99ffff3-4990-46ff-976d-87a77f93cb8b"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addInvoice",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 204\", function () {\r",
+									"    pm.expect(pm.response.code).to.equal(204);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "jwt",
+							"jwt": [
+								{
+									"key": "secret",
+									"value": "JWTAuthenticationHIGHsecuredPasswordVVVp1OH7Xzyr",
+									"type": "string"
+								},
+								{
+									"key": "payload",
+									"value": "{\r\n  \"unique_name\": \"admin\",\r\n  \"UserType\": \"1\",\r\n  \"nbf\": 1732882239,\r\n  \"exp\": 1735474239,\r\n  \"iat\": 1732882239\r\n}",
+									"type": "string"
+								},
+								{
+									"key": "isSecretBase64Encoded",
+									"value": false,
+									"type": "boolean"
+								},
+								{
+									"key": "algorithm",
+									"value": "HS256",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "headerPrefix",
+									"value": "Bearer",
+									"type": "string"
+								},
+								{
+									"key": "queryParamKey",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "header",
+									"value": "{}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"InvoiceDate\": \"2024-11-25\",\r\n  \"OrderId\": \"cf509b36-41e2-4535-1414-08dd13f68266\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7188/api/Invoices",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7188",
+							"path": [
+								"api",
+								"Invoices"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteinvoice",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 204\", function () {\r",
+									"    pm.expect(pm.response.code).to.equal(204);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "jwt",
+							"jwt": [
+								{
+									"key": "secret",
+									"value": "JWTAuthenticationHIGHsecuredPasswordVVVp1OH7Xzyr",
+									"type": "string"
+								},
+								{
+									"key": "payload",
+									"value": "{\r\n  \"unique_name\": \"admin\",\r\n  \"UserType\": \"1\",\r\n  \"nbf\": 1732882239,\r\n  \"exp\": 1735474239,\r\n  \"iat\": 1732882239\r\n}",
+									"type": "string"
+								},
+								{
+									"key": "algorithm",
+									"value": "HS256",
+									"type": "string"
+								},
+								{
+									"key": "isSecretBase64Encoded",
+									"value": false,
+									"type": "boolean"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "headerPrefix",
+									"value": "Bearer",
+									"type": "string"
+								},
+								{
+									"key": "queryParamKey",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "header",
+									"value": "{}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7188/api/Invoices/2e405ee4-349b-4193-58b5-08dd144f7b09",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7188",
+							"path": [
+								"api",
+								"Invoices",
+								"2e405ee4-349b-4193-58b5-08dd144f7b09"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateInvoice",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 204\", function () {\r",
+									"    pm.expect(pm.response.code).to.equal(204);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "jwt",
+							"jwt": [
+								{
+									"key": "secret",
+									"value": "JWTAuthenticationHIGHsecuredPasswordVVVp1OH7Xzyr",
+									"type": "string"
+								},
+								{
+									"key": "payload",
+									"value": "{\r\n  \"unique_name\": \"admin\",\r\n  \"UserType\": \"1\",\r\n  \"nbf\": 1732882239,\r\n  \"exp\": 1735474239,\r\n  \"iat\": 1732882239\r\n}",
+									"type": "string"
+								},
+								{
+									"key": "isSecretBase64Encoded",
+									"value": false,
+									"type": "boolean"
+								},
+								{
+									"key": "algorithm",
+									"value": "HS256",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "headerPrefix",
+									"value": "Bearer",
+									"type": "string"
+								},
+								{
+									"key": "queryParamKey",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "header",
+									"value": "{}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": \"f99ffff3-4990-46ff-976d-87a77f93cb8b\",\r\n  \"invoiceDate\": \"2024-01-01\",\r\n  \"orderId\": \"123e290b-0c59-48d9-92aa-2d348961928e\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7188/api/Invoices/f99ffff3-4990-46ff-976d-87a77f93cb8b",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7188",
+							"path": [
+								"api",
+								"Invoices",
+								"f99ffff3-4990-46ff-976d-87a77f93cb8b"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "jwt",
+				"jwt": [
+					{
+						"key": "secret",
+						"value": "JWTAuthenticationMAYBEHIGHsecuredPasswordVVVp1OH7Xzyr",
+						"type": "string"
+					},
+					{
+						"key": "payload",
+						"value": "{\r\n  \"unique_name\": \"admin\",\r\n  \"UserType\": \"1\",\r\n  \"nbf\": 1732882239,\r\n  \"exp\": 1735474239,\r\n  \"iat\": 1732882239\r\n}",
+						"type": "string"
+					},
+					{
+						"key": "algorithm",
+						"value": "HS256",
+						"type": "string"
+					},
+					{
+						"key": "isSecretBase64Encoded",
+						"value": false,
+						"type": "boolean"
+					},
+					{
+						"key": "addTokenTo",
+						"value": "header",
+						"type": "string"
+					},
+					{
+						"key": "headerPrefix",
+						"value": "Bearer",
+						"type": "string"
+					},
+					{
+						"key": "queryParamKey",
+						"value": "token",
+						"type": "string"
+					},
+					{
+						"key": "header",
+						"value": "{}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "loginAdmin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.expect(pm.response.code).to.equal(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"admin\",\r\n    \"password\": \"123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7188/api/Auth/login",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7188",
+							"path": [
+								"api",
+								"Auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logSupplier",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.expect(pm.response.code).to.equal(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"supplier\",\r\n  \"password\": \"123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7188/api/Auth/login",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7188",
+							"path": [
+								"api",
+								"Auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
