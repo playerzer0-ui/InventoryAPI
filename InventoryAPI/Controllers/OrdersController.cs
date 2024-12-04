@@ -9,6 +9,7 @@ using InventoryAPI.Data;
 using InventoryAPI.Dto;
 using InventoryAPI.Models;
 using Microsoft.AspNetCore.Authorization;
+using iText.Commons.Actions.Data;
 
 namespace InventoryAPI.Controllers
 {
@@ -50,18 +51,23 @@ namespace InventoryAPI.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutOrders(Guid id, EditOrderDto editOrderDto)
         {
+            
             if (id != editOrderDto.Id)
             {
                 return BadRequest();
             }
 
-			//var existingProduct = await _context.Product.FindAsync(id);
-			//if (existingProduct == null)
-			//{
-			//	return NotFound($"Product with ID {id} not found.");
-			//}
+			var existingOrder = await _context.Order.FindAsync(id);
+			if (existingOrder == null)
+			{
+				return NotFound($"Order with ID {id} not found.");
+			}
 
-			_context.Entry(editOrderDto).State = EntityState.Modified;
+			existingOrder.Id = editOrderDto.Id;
+			existingOrder.OrderDate = editOrderDto.OrderDate;
+            existingOrder.OrderType = editOrderDto.OrderType; 
+ 
+			_context.Entry(existingOrder).State = EntityState.Modified;
 
             try
             {
